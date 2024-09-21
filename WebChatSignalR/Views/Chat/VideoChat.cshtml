@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="~/css/VideoChat.css">
+</head>
+<body>
+
+    <div class="main-container">
+        <header>
+            <h1 style="color:white">Görüntülü Görüşme Odası</h1>
+        </header>
+
+        <div id="videoContainer" class="video-area">
+            <div class="video-grid">
+                <video id="localVideo" autoplay muted playsinline class="video-box"></video>
+                <video id="remoteVideo" autoplay playsinline class="video-box"></video>
+            </div>
+        </div>
+
+        <div class="controls">
+            <input type="text" id="roomHashInput" class="roomHashInput" placeholder="Oda Adını Girin">
+            <button class="joinBtn" onclick="copyRoomHash()">Kopyala</button>
+
+            <button class="joinBtn2" onclick="startCall()">Görüntülü Arama Başlat</button>
+            <input class="roomHashInput" style="display:none" placeholder="Kopyala" type="text" id="shareRoomHash" readonly />
+        </div>
+
+        <footer>
+            <p>Share this room: <span id="roomLink">https://localhost:7294/Chat/VideoChat/OdaAdi</span></p>
+        </footer>
+    </div>
+
+
+
+    <script src="https://cdn.scaledrone.com/scaledrone.min.js"></script>
+    <script src="~/js/VideoChat.js"></script>
+
+    <script>
+
+        function copyRoomHash() {
+            // Oda adını input alanından al
+            var roomHashInput = document.getElementById('roomHashInput').value;
+
+            // Eğer oda adı girilmişse URL'yi güncelle
+            if (roomHashInput) {
+                var baseUrl = "https://localhost:7294/Chat/VideoChat/";
+                var fullUrl = baseUrl + roomHashInput;
+
+                // Güncellenen URL'yi input alanına ekle ve görünür yap
+                var shareRoomHashInput = document.getElementById('shareRoomHash');
+                shareRoomHashInput.value = fullUrl;
+
+                // URL'yi kopyala
+                shareRoomHashInput.select();
+                document.execCommand('copy');
+
+                // Linki güncelle
+                document.getElementById('roomLink').innerText = fullUrl;
+
+                alert("Oda baglantısı kopyalandı");
+            } else {
+                alert("Lütfen oda adini girin!");
+            }
+        }
+
+    </script>
+
+</body>
+</html>
+
+

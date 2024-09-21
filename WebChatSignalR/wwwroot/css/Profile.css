@@ -1,0 +1,100 @@
+﻿/* Genel Stiller */
+.profile-container {
+    display: flex;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+}
+
+.profile-picture {
+    display: flex;
+    justify-content: center; /* Yatayda ortalamak için */
+    margin-bottom: 20px;
+}
+
+    .profile-picture img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+.profile-sidebar {
+    width: 300px;
+    background-color: #161616;
+    color: #fff;
+    padding: 20px;
+}
+
+    .profile-sidebar img {
+        margin-bottom: 15px;
+    }
+
+    .profile-sidebar h2 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+.profile-menu {
+    list-style-type: none;
+    padding: 0;
+}
+
+    .profile-menu li {
+        padding: 15px;
+        cursor: pointer;
+        background-color: #000000;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        text-align: center;
+        transition: background-color 0.3s ease;
+    }
+
+        .profile-menu li.active, .profile-menu li:hover {
+            background-color: #609619;
+        }
+
+.profile-content {
+    flex: 1;
+    padding: 40px;
+    background-color: #dddddd;
+}
+
+.tab-content {
+    display: none;
+}
+
+    .tab-content.active {
+        display: block;
+    }
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+    .input-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .input-group input, .input-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+.btn {
+    background-color: #161616;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .btn:hover {
+        background-color: #609619;
+    }

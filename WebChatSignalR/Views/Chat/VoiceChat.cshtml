@@ -1,0 +1,82 @@
+﻿<head>
+    <link rel="stylesheet" type="text/css" href="~/css/VoiceChat.css">
+</head>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Chat</title>
+
+</head>
+<body onload="main()">
+
+    <div class="main-container">
+        <header>
+            <h1 style="color:white">Sesli Görüşme Odası</h1>
+        </header>
+        <br>
+        <div id="container">
+            <div id="user-icon">@ViewBag.Username</div>
+            <div id="status">Görüşmeye devam edebilmek için lütfen bir odaya bağlanın.</div>
+            <br>
+            <i id="fa-check" class="fa-solid fa-circle-check fa-fade fa-2xl" style="color: #02c022; display:none;"></i>
+            <i id="fa-exclamation" class="fa-solid fa-circle-xmark fa-2xl" style="color: #b70101;"></i>
+            <br>
+            <br>
+            <div id="local-controls">
+                <button id="join" onclick="joinRoom()">Odaya Bağlan</button>
+                <button id="leave" onclick="leaveRoom()">Odadan Çık</button>
+                <button style="background:#5a1db8" id="toggle-mic" onclick="call.setLocalAudio(!call.localAudio())">
+                    Mikrofonu Aç/Kapat
+                </button>
+            </div>
+        </div>
+        <canvas id="visualizer"></canvas>
+    </div>
+
+
+
+
+    <script src="~/js/VoiceChat.js"></script>
+    <script src="~/js/daily.js"></script>
+    <script>
+        function visualizeAudio(track) {
+            const audioContext = new AudioContext();
+            const analyser = audioContext.createAnalyser();
+            const source = audioContext.createMediaStreamSource(new MediaStream([track]));
+            source.connect(analyser);
+
+            const canvas = document.createElement("canvas");
+            canvas.width = document.getElementById('visualizer').offsetWidth;
+            canvas.height = document.getElementById('visualizer').offsetHeight;
+            const ctx = canvas.getContext("2d");
+            document.getElementById('visualizer').appendChild(canvas);
+
+            analyser.fftSize = 256;
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+
+            function draw() {
+                requestAnimationFrame(draw);
+                analyser.getByteFrequencyData(dataArray);
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const barWidth = (canvas.width / bufferLength) * 2.5;
+                let barHeight;
+                let x = 0;
+
+                for (let i = 0; i < bufferLength; i++) {
+                    barHeight = dataArray[i];
+                    ctx.fillStyle = `rgb(${barHeight + 100},50,50)`; // Dinamik renk
+                    ctx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2);
+                    x += barWidth + 1;
+                }
+            }
+
+            draw();
+        }
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+﻿body {
+    background-color: #161616;
+    font-family: 'Arial', sans-serif;
+}
+
+
+
+/* Sidebar Styling */
+#sidebar {
+    height: 100vh;
+    width: 200px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(0);
+    overflow-y: auto;
+    background-color: #000000;
+    padding-top: 20px;
+    transition: all 0.5s ease;
+    z-index: 1000;
+}
+
+    #sidebar ul {
+        padding: 0;
+        list-style-type: none;
+    }
+
+        #sidebar ul li {
+            padding: 20px;
+            text-align: left;
+            transition: all 0.3s ease;
+            width: 185px;
+        }
+
+            #sidebar ul li a {
+                color: #fff;
+                text-decoration: none;
+                font-size: 1.1em;
+                display: flex;
+                align-items: center;
+            }
+
+                #sidebar ul li a i {
+                    margin-right: 10px;
+                    font-size: 1.3em;
+                }
+
+            #sidebar ul li:hover {
+                background-color: #609619;
+                border-radius: 5px;
+                transform: translateX(10px);
+            }
+
+            #sidebar ul li.active a {
+                
+                border-radius: 5px;
+            }
+            #sidebar li {
+                transition: background-color 0.3s ease;
+            }
+
+
+    #sidebar.hidden {
+        transform: translateX(-100%);
+    }
+
+#toggle-btn {
+    position: fixed;
+    bottom: 20px; /* Alt konum */
+    left: 20px; /* Sağ konum */
+    background-color: #609619;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1001; /* Daha yüksek z-index */
+    font-size: 20px;
+}
+
+/* Main Content Styling */
+.content {
+    margin-left: 270px;
+    padding: 23px;
+    transition: margin-left 0.5s ease;
+}
+
+    .content h1 {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .content p {
+        color: #6c757d;
+        line-height: 1.8;
+        font-size: 1.1em;
+    }
+
+/* Hover and Animation Effects */
+#sidebar ul li:hover a {
+    color: #fff;
+}
+
+/* Sidebar Toggle Button */
+#toggleSidebar {
+    position: absolute;
+    top: 20px;
+    left: 260px;
+    font-size: 1.5em;
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+    #toggleSidebar:hover {
+        color: #6c63ff;
+    }
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+    #sidebar {
+        width: 60px;
+        overflow: hidden;
+    }
+
+        #sidebar ul li a {
+            justify-content: center;
+        }
+
+            #sidebar ul li a i {
+                margin-right: 0;
+            }
+
+    .content {
+        margin-left: 80px;
+        padding: 20px;
+    }
+
+    #toggleSidebar {
+        left: 60px;
+    }
+}
+
+
+/* İkinci Sidebar Stili */
+.secondary-sidebar {
+    height: 100vh;
+    width: 65px; /* İkinci sidebar'ın genişliği */
+    position: fixed;
+    top: 0;
+    left: 200px; /* İlk sidebar'ın genişliğine göre yerleştir */
+    background-color: #00000063;
+    padding-top: 20px;
+    transition: all 0.5s ease; /* Animasyon ekledik */
+    z-index: 1000;
+}
+
+    .secondary-sidebar.hidden {
+        left: 0;
+    }
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 15px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5em;
+    transition: background-color 0.3s ease;
+}
+
+    .sidebar-item:hover {
+        background-color: #444;
+        border-radius: 5px;
+    }

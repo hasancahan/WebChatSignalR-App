@@ -1,0 +1,148 @@
+﻿@{
+    ViewData["Title"] = "Chat";
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/css/Chat.css">
+</head>
+<body style="background-color:#161616">
+    <div class="container">
+        <div class="chat-container">
+            <div class="messages-list" id="messagesList">
+                <!-- Mesajlar burada görünecek -->
+            </div>
+            <div class="message-input">
+                <input style="display:none" type="text" id="userInput" value="@ViewBag.Username" />
+                <input type="text" id="messageInput" placeholder="Mesaj Yazınız..." />
+                <label for="fileInput" class="file-label">
+                    <i class="fa-solid fa-paperclip"></i>
+                </label>
+                <input type="file" id="fileInput" style="display:none" />
+                <button id="emojiButton">
+                    <i class="fa-solid fa-smile"></i>
+                </button>
+                <button id="sendButton">Gönder</button>
+                <div id="emojiPicker" class="emoji-picker">
+                </div>
+            </div>
+        </div>
+
+        @section Scripts {
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
+            <script>
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    const sendButton = document.getElementById('sendButton');
+                    const messageInput = document.getElementById('messageInput');
+                    const fileInput = document.getElementById('fileInput');
+                    const emojiButton = document.getElementById('emojiButton');
+                    const emojiPicker = document.getElementById('emojiPicker');
+
+                    // Dosya seçme işlemi
+                    fileInput.addEventListener('change', function (event) {
+                        const file = event.target.files[0];
+                        if (file) {
+                            // Dosya yükleme işlemi burada yapılacak
+                            console.log('Dosya seçildi:', file.name);
+                        }
+                    });
+
+                    // Emoji butonuna tıklama işlemi
+                    emojiButton.addEventListener('click', function () {
+                        emojiPicker.style.display = emojiPicker.style.display === 'block' ? 'none' : 'block';
+                    });
+
+                    // Emoji seçimi
+                    emojiPicker.addEventListener('click', function (event) {
+                        if (event.target.tagName === 'SPAN') {
+                            const emoji = event.target.textContent;
+                            messageInput.value += emoji;
+                            emojiPicker.style.display = 'none';
+                        }
+                    });
+
+                    // Emoji verilerini yükleyin (örneğin, basit bir emoji liste)
+                    const emojis = [
+                        '😊', '😂', '😍', '😢', '😡', '👍', '👎', '🎉', '❤️', '🔥', '😎', '🤔', '🙄', '😜', '💔', '😘',
+                        '😁', '😆', '😅', '🤗', '😇', '😷', '😈', '😐', '😒', '😲', '🤯', '🤪', '🥳', '🤓', '💩',
+                        '🤖', '👻', '💀', '👽', '👾', '👋', '🙏', '💪', '👏', '👀', '👂', '✋', '👌', '✌️', '👎',
+                        '💃', '🕺', '👫', '👭', '👬', '👩‍❤️‍👨', '👨‍❤️‍👨', '👩‍❤️‍👩', '👶', '👦', '👧', '👨', '👩',
+                        '🧑', '👴', '👵', '👼', '🎅', '🤶', '🦸', '🦸‍♀️', '🦹', '🦹‍♀️', '🧙', '🧙‍♀️', '🧛', '🧛‍♀️',
+                        '🧟', '🧟‍♀️', '🧞', '🧞‍♀️', '🧜', '🧜‍♀️', '🧚', '🧚‍♀️', '🧑‍🚀', '🧑‍🍳', '🧑‍🏫', '👨‍⚕️',
+                        '👩‍⚕️', '🎨', '🏆', '⚽️', '🏀', '🎾', '🏐', '🏈', '🎱', '🏓', '🥇', '🥈', '🥉', '🎤', '🎧',
+                        '🎸', '🎹', '🥁', '🎷', '🎺', '🎻', '🛶', '🚗', '🚕', '🚓', '🚌', '🏎', '🚀', '🛸', '🚁'
+                    ];
+                    emojis.forEach(function (emoji) {
+                        const span = document.createElement('span');
+                        span.textContent = emoji;
+                        emojiPicker.appendChild(span);
+                    });
+                });
+
+
+
+
+
+                const connection = new signalR.HubConnectionBuilder()
+                    .withUrl("/chathub")
+                    .build();
+
+                // Kullanıcı renkleri
+                const userColors = {};
+
+                function getUserColor(user) {
+                    if (!userColors[user]) {
+                        userColors[user] = '#' + Math.floor(Math.random() * 16777215).toString(16); // Random renk
+                    }
+                    return userColors[user];
+                }
+
+                // Mesaj alma (ReceiveMessage) işlevi
+                connection.on("ReceiveMessage", (user, message) => {
+                    const userName = document.getElementById("userInput").value;
+                    const userColor = getUserColor(user);
+                    const messageElement = document.createElement("div");
+                    messageElement.className = `message ${user === userName ? 'right' : 'left'}`;
+                    messageElement.innerHTML = `<div class="message-content"><span class="message-username" style="color: ${userColor};">${user}</span>: ${message}</div>`;
+                    document.getElementById("messagesList").appendChild(messageElement);
+                    document.querySelector('.messages-list').scrollTop = document.querySelector('.messages-list').scrollHeight; // Scroll to bottom
+                });
+
+                // Eski mesajları yükleme işlevi
+                connection.on("LoadMessages", (messages) => {
+                    const userName = document.getElementById("userInput").value;
+                    messages.forEach(msg => {
+                        const userColor = getUserColor(msg.user);
+                        const messageElement = document.createElement("div");
+                        messageElement.className = `message ${msg.user === userName ? 'right' : 'left'}`;
+                        messageElement.innerHTML = `<div class="message-content"><span class="message-username" style="color: ${userColor};">${msg.user}</span>: ${msg.content}</div>`;
+                        document.getElementById("messagesList").appendChild(messageElement);
+                    });
+                    document.querySelector('.messages-list').scrollTop = document.querySelector('.messages-list').scrollHeight; // Scroll to bottom
+                });
+
+                // Bağlantıyı başlat
+                connection.start().then(() => {
+                    // Bağlantı kurulduktan sonra eski mesajları yüklemek için
+                    connection.invoke("LoadMessages").catch(err => console.error(err));
+                }).catch(err => console.error('Connection failed: ', err));
+
+                // Mesaj gönderme işlemi
+                document.getElementById("sendButton").addEventListener("click", () => {
+                    const user = document.getElementById("userInput").value;
+                    const message = document.getElementById("messageInput").value;
+                    connection.invoke("SendMessage", user, message).catch(err => console.error(err));
+                    document.getElementById("messageInput").value = ""; // Clear input after sending
+                });
+
+            </script>
+        }
+</body>
+</html>

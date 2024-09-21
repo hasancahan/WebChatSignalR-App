@@ -1,0 +1,129 @@
+﻿body {
+    background: radial-gradient(farthest-side, #a7b10c 0%, #75054d 100%) no-repeat fixed 0 0;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 95vh;
+    margin: 0 auto;
+    background: #000000;
+    border-radius: 8px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transform: scale(0.8); /* Animasyon başlangıcı */
+    opacity: 0;
+    animation: fadeInScale 1s forwards ease-out; /* Animasyon */
+}
+
+@keyframes fadeInScale {
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.messages-list {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    display: flex;
+    margin-bottom: 10px;
+    padding: 11px;
+    border-radius: 15px;
+    font-size: 15px;
+    line-height: 1.4;
+    max-width: 70%;
+    word-wrap: break-word;
+    color: #fff;
+}
+
+    .message.left {
+        background: #2d5c859e;
+        color: #ffffff;
+        align-self: flex-start;
+    }
+
+    .message.right {
+        background: #66962bad;
+        color: #fff;
+        align-self: flex-end;
+    }
+
+.message-content {
+    display: flex;
+    align-items: center;
+}
+
+.message-username {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.message-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background: #000000;
+    position: relative; /* Emoji picker'ın konumlandırılması için */
+    align-items: center;
+}
+
+    .message-input input {
+        flex: 1;
+        margin-right: 10px;
+        border: 1px solid #28a745;
+        border-radius: 20px;
+        padding: 10px;
+    }
+
+        .message-input button:hover {
+            background: #00ba00;
+        }
+
+        .message-input input:focus, .message-input button:focus {
+            outline: none;
+        }
+
+
+#emojiButton {
+
+    position: relative; /* Emoji picker'ın konumlandırılması için */
+}
+#emojiPicker {
+    display: none;
+    position: absolute;
+    bottom: 60px; /* Emoji picker'ı butonun üstünde konumlandır */
+    right: 0; /* Butonun hizasında konumlandır */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 5px;
+    border-radius: 4px;
+    height: auto; /* İçerik yüksekliğine göre otomatik */
+    overflow-y: auto; /* İçerik taşarsa kaydırma */
+}
+.emoji-picker span {
+    cursor: pointer;
+    margin: 5px;
+    display: inline-block;
+    font-size:x-large;
+}
+#sendButton, #emojiButton, .file-label {
+    background-color: #414141;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+    margin-left: 5px;
+    align-items: center;
+    justify-content: center;
+    margin-block: auto;
+}

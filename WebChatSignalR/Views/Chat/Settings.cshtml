@@ -1,0 +1,96 @@
+﻿
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/Settings.css">
+</head>
+
+<body>
+
+    <div class="settings-container">
+        <div class="settings-sidebar">
+            <h2>Ayarlar</h2>
+            <ul class="settings-menu">
+                <li data-tab="notifications" class="active">Bildirimler</li>
+                <li data-tab="appearance">Görünüm</li>
+                <li data-tab="security">Güvenlik</li>
+                <li data-tab="account">Hesap</li>
+            </ul>
+        </div>
+
+        <div class="settings-content">
+            <!-- Bildirim Ayarları -->
+            <div class="tab-content active" id="notifications">
+                <h3>Bildirim Ayarları</h3>
+                <div class="input-group">
+                    <label for="email-notifications">E-posta Bildirimleri</label>
+                    <input type="checkbox" id="email-notifications" checked />
+                </div>
+                <div class="input-group">
+                    <label for="sms-notifications">SMS Bildirimleri</label>
+                    <input type="checkbox" id="sms-notifications" />
+                </div>
+                <div class="input-group">
+                    <label for="push-notifications">Anlık Bildirimler</label>
+                    <input type="checkbox" id="push-notifications" />
+                </div>
+            </div>
+
+            <!-- Görünüm Ayarları -->
+            <div class="tab-content" id="appearance">
+                <h3>Görünüm Ayarları</h3>
+                <div class="theme-options">
+                    <button class="theme-btn light">Açık Tema</button>
+                    <button class="theme-btn dark">Koyu Tema</button>
+                </div>
+            </div>
+
+            <!-- Güvenlik Ayarları -->
+            <div class="tab-content" id="security">
+                <h3>Güvenlik Ayarları</h3>
+                <div class="input-group">
+                    <label for="2fa">İki Faktörlü Kimlik Doğrulama</label>
+                    <button id="2fa" class="btn security-btn">Etkinleştir</button>
+                </div>
+                <div class="input-group">
+                    <label for="password">Şifre Değiştir</label>
+                    <input class="message-input" type="password" id="password" placeholder="Yeni Şifre" />
+                </div>
+            </div>
+
+            <!-- Hesap Ayarları -->
+            <div class="tab-content" id="account">
+                <h3>Hesap Ayarları</h3>
+                <div class="input-group">
+                    <label>Hesabımı Sil</label>
+                    <button class="btn security-btn">Onayla</button>
+                </div>
+            </div>
+
+            <button class="btn save-btn">Ayarları Kaydet</button>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    // Sekmeler arası geçiş
+    document.querySelectorAll('.settings-menu li').forEach(menuItem => {
+        menuItem.addEventListener('click', function () {
+            document.querySelectorAll('.settings-menu li').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+
+            const tabId = this.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+            this.classList.add('active');
+        });
+    });
+
+    // Tema seçici düğmeleri
+    document.querySelector('.theme-btn.light').addEventListener('click', function () {
+        document.body.classList.remove('dark-theme');
+    });
+
+    document.querySelector('.theme-btn.dark').addEventListener('click', function () {
+        document.body.classList.add('dark-theme');
+    });
+
+</script>

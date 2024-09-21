@@ -1,0 +1,80 @@
+﻿<head>
+    <link rel="stylesheet" type="text/css" href="~/css/Profile.css">
+</head>
+
+
+<body>
+
+    <div class="profile-container">
+        <div class="profile-sidebar">
+            <div class="profile-picture">
+                <img src="/content/photo_user/1716049243717.jpg" alt="Profile Picture" />
+            </div>
+            <h2>@ViewBag.Username</h2>
+            <ul class="profile-menu">
+                <li data-tab="general" class="active">Genel Bilgiler</li>
+                <li data-tab="privacy">Gizlilik</li>
+                <li data-tab="password">Şifre Değiştir</li>
+            </ul>
+        </div>
+
+        <div class="profile-content">
+            <div class="tab-content active" id="general">
+                <h3>Genel Bilgiler</h3>
+                <div class="input-group">
+                    <label for="name">Ad</label>
+                    <input type="text" id="name" value="@ViewBag.Username" />
+                </div>
+                <div class="input-group">
+                    <label for="email">E-posta</label>
+                    <input type="email" id="email" value="@ViewBag.Email" />
+                </div>
+                <div class="input-group">
+                    <label for="phone">Telefon Numarası</label>
+                    <input type="text" id="phone" value="+123456789" />
+                </div>
+            </div>
+
+            <div class="tab-content" id="privacy">
+                <h3>Gizlilik Ayarları</h3>
+                <div class="input-group">
+                    <label>Profil Görünürlüğü</label>
+                    <select>
+                        <option value="public">Herkese Açık</option>
+                        <option value="private">Sadece Ben</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="tab-content" id="password">
+                <h3>Şifre Değiştir</h3>
+                <div class="input-group">
+                    <label for="current-password">Mevcut Şifre</label>
+                    <input type="password" id="current-password" />
+                </div>
+                <div class="input-group">
+                    <label for="new-password">Yeni Şifre</label>
+                    <input type="password" id="new-password" />
+                </div>
+            </div>
+
+            <button class="btn save-btn">Kaydet</button>
+        </div>
+    </div>
+
+
+</body>
+
+<script>
+    document.querySelectorAll('.profile-menu li').forEach(menuItem => {
+        menuItem.addEventListener('click', function () {
+            document.querySelectorAll('.profile-menu li').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+
+            const tabId = this.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+            this.classList.add('active');
+        });
+    });
+</script>
+

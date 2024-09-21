@@ -1,0 +1,60 @@
+﻿@model List<WebChatSignalR.Models.AppUsers>
+
+@{
+}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/AppUsersBook.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Uygulama Rehberi</h1>
+            <input type="text" id="searchInput" class="search-bar" placeholder="Kullanıcı Ara..." onkeyup="filterUsers()" />
+        </div>
+        <div id="userList" class="user-list">
+            @foreach (var user in Model)
+            {
+                <div class="user-card" data-username="@user.FullName">
+                    <div class="avatar-placeholder">
+                        <div class="avatar">@user.FullName.Substring(0, 1)</div>
+                    </div>
+                    <div class="user-details">
+                        <p class="user-name">@user.FullName</p>
+                        <p class="user-username">@user.Username</p>
+                        <p class="user-email">@user.Email</p>
+                    </div>
+                    <div class="more-info">
+                        <p>Joined: @user.FirstRegisterDate.ToString("dd/MM/yyyy")</p>
+                        <button class="message-btn">Message</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    function filterUsers() {
+        var input, filter, userList, userCards, username, i;
+        input = document.getElementById('searchInput');
+        filter = input.value.toUpperCase();
+        userList = document.getElementById("userList");
+        userCards = userList.getElementsByClassName('user-card');
+
+        for (i = 0; i < userCards.length; i++) {
+            username = userCards[i].getAttribute("data-username");
+            if (username.toUpperCase().indexOf(filter) > -1) {
+                userCards[i].style.display = "";
+            } else {
+                userCards[i].style.display = "none";
+            }
+        }
+    }
+</script>
+
+                    @* Rehbere dönüştür *@

@@ -1,0 +1,62 @@
+﻿
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="~/css/Index_chat.css">
+</head>
+<body>
+
+    <div class="button-container">
+        <!-- Text Chat Button -->
+        <div class="chat-btn" id="appUsersBookBtn">
+            <div class="neon-border"></div>
+            <div class="icon"><i class="fa-solid fa-address-book"></i></div>
+            <div class="text">Uygulama Rehberi</div>
+        </div>
+
+        <!-- Voice Chat Button -->
+        <div class="chat-btn" id="voiceChatBtn">
+            <div class="neon-border"></div>
+            <div class="icon"><i class="fa-solid fa-microphone-lines"></i></div>
+            <div class="text">Sesli Görüşme</div>
+        </div>
+
+        <!-- Video Chat Button -->
+        <div class="chat-btn" id="videoChatBtn">
+            <div class="neon-border"></div>
+            <div class="icon"><i class="fa-solid fa-video"></i></div>
+            <div class="text">Görüntülü Görüşme</div>
+        </div>
+
+        <!-- Group Chat Button -->
+        <div class="chat-btn" id="groupChatBtn">
+            <div class="neon-border"></div>
+            <div class="icon"><i class="fa-solid fa-users"></i></div>
+            <div class="text">Grup Mesajlaşma</div>
+        </div>
+    </div>
+
+</body>
+
+<script>
+
+    document.getElementById("appUsersBookBtn").addEventListener("click", function () {
+        window.location.href = "/Chat/UsersBook";
+    });
+
+    document.getElementById("voiceChatBtn").addEventListener("click", function () {
+        window.location.href = "/Chat/VoiceChat";
+    });
+
+    document.getElementById("videoChatBtn").addEventListener("click", function () {
+        window.location.href = "/Chat/VideoChat";
+    });
+
+    document.getElementById("groupChatBtn").addEventListener("click", function () {
+        window.location.href = "/Chat/GroupChat";
+    });
+
+</script>
+
+</html>
